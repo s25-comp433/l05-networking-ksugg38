@@ -38,7 +38,7 @@ struct ContentView: View {
         guard
             let url = URL(
                 string:
-                    "https://itunes.apple.com/search?term=taylor+swift&entity=song"
+                "https://itunes.apple.com/search?term=taylor+swift&entity=song"
             )
         else {
             print("Invalid URL")
@@ -49,8 +49,8 @@ struct ContentView: View {
             let (data, _) = try await URLSession.shared.data(from: url)
 
             if let decodedResponse = try? JSONDecoder().decode(
-                Response.self, from: data)
-            {
+                Response.self, from: data
+            ) {
                 results = decodedResponse.results
             }
         } catch {
