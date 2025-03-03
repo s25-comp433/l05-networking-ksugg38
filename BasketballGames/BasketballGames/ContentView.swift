@@ -74,7 +74,7 @@ struct ContentView: View {
             if let decodedGames = try? JSONDecoder().decode(
                 [Game].self, from: data
             ) {
-                self.games = decodedGames
+                games = decodedGames
             }
         } catch {
             print("Invalid data")
