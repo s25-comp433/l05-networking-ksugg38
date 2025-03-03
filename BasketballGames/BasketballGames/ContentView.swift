@@ -5,8 +5,8 @@
 //  Created by Samuel Shi on 2/27/25.
 //
 
-import SwiftUI
 import Foundation
+import SwiftUI
 
 struct Game: Codable, Identifiable {
     let date: String
@@ -24,15 +24,15 @@ struct Score: Codable {
 
 struct ContentView: View {
     @State private var games: [Game] = []
-    
+
     var body: some View {
         NavigationView {
-            List(games) { game in
-                HStack{
+            List(self.games) { game in
+                HStack {
                     VStack(alignment: .leading) {
                         Text("\(game.team) vs. \(game.opponent)")
                             .font(.headline)
-                        
+
                         Text("\(game.date)")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
@@ -41,43 +41,42 @@ struct ContentView: View {
                     VStack(alignment: .trailing) {
                         Text("\(game.score.unc) - \(game.score.opponent)")
                             .font(.headline)
-                        
-                        if game.isHomeGame{
+
+                        if game.isHomeGame {
                             Text("Home")
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
-                            
-                        }else{
+
+                        } else {
                             Text("Away")
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
                         }
-                        
                     }
-                    
                 }
-                
             }
             .navigationTitle("UNC Basketball")
             .task {
-                await loadData()
+                await self.loadData()
             }
         }
     }
-    
+
     func loadData() async {
-        guard let url = URL(string: "https://api.samuelshi.com/uncbasketball") else {
+        guard let url = URL(string: "https://api.samuelshi.com/uncbasketball")
+        else {
             print("Invalid URL")
             return
         }
-        
+
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
-            if let decodedGames = try? JSONDecoder().decode([Game].self, from: data)
+            if let decodedGames = try? JSONDecoder().decode(
+                [Game].self, from: data)
             {
                 self.games = decodedGames
             }
-            
+
         } catch {
             print("Invalid data")
         }
