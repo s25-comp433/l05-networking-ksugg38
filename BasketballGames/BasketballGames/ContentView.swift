@@ -72,11 +72,10 @@ struct ContentView: View {
         do {
             let (data, _) = try await URLSession.shared.data(from: url)
             if let decodedGames = try? JSONDecoder().decode(
-                [Game].self, from: data)
-            {
+                [Game].self, from: data
+            ) {
                 self.games = decodedGames
             }
-
         } catch {
             print("Invalid data")
         }
